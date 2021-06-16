@@ -37,7 +37,25 @@ function displayWord() {
 
 //Update the wrong letters
 function updateWrongLettersEl() {
-  console.log("update wrong");
+  wrongLetterEl.innerHTML = `
+    ${wrongLetters.length > 0 ? `<p>Wrong</p>` : ""}
+    ${wrongLetters.map((letter) => `<span> ${letter}</span>`)}
+  `;
+
+  figureParts.forEach((part, index) => {
+    const errors = wrongLetters.length;
+
+    if (index < errors) {
+      part.style.display = "block";
+    } else {
+      part.style.display = "none";
+    }
+  });
+
+  if (wrongLetters.length === figureParts.length) {
+    finalMessage.innerText = "You lost.  Try again.";
+    popup.style.display = "flex";
+  }
 }
 
 function showNotification() {
@@ -45,7 +63,7 @@ function showNotification() {
 
   setTimeout(() => {
     notification.classList.remove("show");
-  }, 2000);
+  }, 3000);
 }
 
 //Keydown letter press
